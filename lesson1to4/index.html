@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      const appendNumberToBody = number => {
+        const text = document.createTextNode(number);
+        document.body.appendChild(text);
+      };
+
+      const importObjects = {
+        env: {
+          appendNumberToBody,
+          alert
+        }
+      };
+
+      WebAssembly.instantiateStreaming(
+        fetch("utils.gc.wasm"),
+        importObjects
+      ).then(wasmModule => {
+        wasmModule.instance.exports.run();
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
